@@ -4,208 +4,175 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MediTracker - Your Personal Medication Manager</title>
-    
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
+
+    <!-- Tailwind CSS CDN - prefer <link> to <script> for static purity -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.3.3/dist/tailwind.min.css" rel="stylesheet">
+
     <!-- Inter Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
+
     <style>
-        /* Apply Inter font to the whole page */
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        /* Simple animation for fade-in */
-        .fade-in {
-            animation: fadeIn 0.5s ease-in-out;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+      body { font-family: 'Inter', sans-serif; }
+      .fade-in { animation: fadeIn 0.5s ease-in-out; }
+      @keyframes fadeIn { from { opacity: 0; transform: translateY(10px);} to { opacity: 1; transform: translateY(0);} }
+
+      /* Hamburger CSS (checkbox hack) */
+      #menu-toggle:checked + #menu {
+        display: block;
+      }
+      #menu {
+        display: none;
+      }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-900">
-
-    <!-- Header & Navigation -->
-    <header class="bg-white shadow-md sticky top-0 z-50">
-        <nav class="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
-            <!-- Logo -->
-            <a href="#" class="text-2xl font-bold text-blue-600">
-                MediTracker 🩺
-            </a>
-            
-            <!-- Desktop Menu -->
-            <div class="hidden md:flex space-x-6">
-                <a href="#features" class="text-gray-600 hover:text-blue-600 transition duration-150">Features</a>
-                <a href="#how-it-works" class="text-gray-600 hover:text-blue-600 transition duration-150">How It Works</a>
-                <a href="#pricing" class="text-gray-600 hover:text-blue-600 transition duration-150">Pricing</a>
-            </div>
-            
-            <!-- CTA & Mobile Menu Button -->
-            <div class="flex items-center space-x-4">
-                <a href="#" class="hidden sm:inline-block bg-blue-600 text-white px-5 py-2 rounded-lg font-semibold shadow-lg hover:bg-blue-700 transition duration-150">
-                    Sign Up
-                </a>
-                <!-- Mobile Menu Button -->
-                <button id="menu-btn" class="md:hidden p-2 rounded-md text-gray-600 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
-                    </svg>
-                </button>
-            </div>
-        </nav>
-        
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white shadow-xl fade-in">
-            <a href="#features" class="block px-4 py-3 text-gray-600 hover:bg-gray-50 hover:text-blue-600">Features</a>
-            <a href="#how-it-works" class="block px-4 py-3 text-gray-600 hover:bg-gray-50 hover:text-blue-600">How It Works</a>
-            <a href="#pricing" class="block px-4 py-3 text-gray-600 hover:bg-gray-50 hover:text-blue-600">Pricing</a>
-            <a href="#" class="block px-4 py-4 text-center bg-blue-50 text-blue-700 font-semibold rounded-b-lg hover:bg-blue-100">
-                Sign Up
-            </a>
+  <header class="bg-white shadow-md sticky top-0 z-50">
+    <nav class="container mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center" aria-label="Main navigation">
+      <a href="#hero" class="text-2xl font-bold text-blue-600" aria-label="MediTracker Home">
+        MediTracker 🩺
+      </a>
+      <div class="hidden md:flex space-x-6">
+        <a href="#features" class="text-gray-600 hover:text-blue-600 transition duration-150">Features</a>
+        <a href="#how-it-works" class="text-gray-600 hover:text-blue-600 transition duration-150">How It Works</a>
+        <a href="#pricing" class="text-gray-600 hover:text-blue-600 transition duration-150">Pricing</a>
+      </div>
+      <div class="flex items-center space-x-4">
+        <button class="hidden sm:inline-block bg-blue-600 text-white px-5 py-2 rounded-lg font-semibold shadow-lg hover:bg-blue-700 transition duration-150" aria-label="Sign Up" disabled>
+          Sign Up
+        </button>
+        <!-- Hamburger for mobile, pure CSS -->
+        <div class="md:hidden">
+          <input type="checkbox" id="menu-toggle" class="hidden peer" />
+          <label for="menu-toggle" aria-label="Open mobile menu" class="p-2 rounded-md text-gray-600 hover:bg-gray-100 cursor-pointer peer-focus:ring-2 peer-focus:ring-blue-500 block">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/>
+            </svg>
+          </label>
         </div>
-    </header>
-
-    <!-- Main Content -->
-    <main>
-        <!-- Hero Section -->
-        <section class="bg-white">
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32 text-center fade-in">
-                <h1 class="text-4xl md:text-6xl font-bold text-gray-900 leading-tight">
-                    Never Miss a Dose Again.
-                </h1>
-                <p class="mt-6 text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
-                    MediTracker is the simple, smart, and friendly way to manage your medications, schedule reminders, and track your health history.
-                </p>
-                <a href="#" class="mt-10 inline-block bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold text-lg shadow-xl hover:bg-blue-700 transition duration-150 transform hover:scale-105">
-                    Start Tracking for Free
-                </a>
-            </div>
-        </section>
-
-        <!-- Features Section -->
-        <section id="features" class="py-20 md:py-28">
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-16">
-                    <h2 class="text-3xl md:text-4xl font-bold">Everything You Need in One App</h2>
-                    <p class="mt-4 text-lg text-gray-600">Stay on top of your health with powerful features.</p>
-                </div>
-                
-                <div class="grid md:grid-cols-3 gap-8">
-                    <!-- Feature Card 1 -->
-                    <div class="bg-white p-8 rounded-xl shadow-lg fade-in" style="animation-delay: 0.1s;">
-                        <div class="bg-blue-100 text-blue-600 w-12 h-12 rounded-full flex items-center justify-center">
-                            <!-- Icon: Bell -->
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341A6.002 6.002 0 006 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
-                        </div>
-                        <h3 class="mt-5 text-xl font-semibold">Smart Reminders</h3>
-                        <p class="mt-2 text-gray-600">Get timely notifications for your pills, appointments, and refills. You'll never forget a dose.</p>
-                    </div>
-                    
-                    <!-- Feature Card 2 -->
-                    <div class="bg-white p-8 rounded-xl shadow-lg fade-in" style="animation-delay: 0.2s;">
-                        <div class="bg-green-100 text-green-600 w-12 h-12 rounded-full flex items-center justify-center">
-                            <!-- Icon: History -->
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                        </div>
-                        <h3 class="mt-5 text-xl font-semibold">Dosage History</h3>
-                        <p class="mt-2 text-gray-600">Keep a detailed log of your medication history. Easily share reports with your doctor or caregiver.</p>
-                    </div>
-                    
-                    <!-- Feature Card 3 -->
-                    <div class="bg-white p-8 rounded-xl shadow-lg fade-in" style="animation-delay: 0.3s;">
-                        <div class="bg-indigo-100 text-indigo-600 w-12 h-12 rounded-full flex items-center justify-center">
-                            <!-- Icon: Pharmacy -->
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>
-                        </div>
-                        <h3 class="mt-5 text-xl font-semibold">Appointment Alerts</h3>
-                        <p class="mt-2 text-gray-600">Track your inventory and get notified when you're running low, well before you run out.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- How It Works Section -->
-        <section id="how-it-works" class="py-20 md:py-28 bg-white">
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="text-center mb-16">
-                    <h2 class="text-3xl md:text-4xl font-bold">Get Started in 3 Easy Steps</h2>
-                    <p class="mt-4 text-lg text-gray-600">Managing your health shouldn't be complicated.</p>
-                </div>
-                
-                <div class="max-w-4xl mx-auto grid md:grid-cols-3 gap-8 md:gap-16 text-center">
-                    <!-- Step 1 -->
-                    <div class="fade-in" style="animation-delay: 0.1s;">
-                        <div class="text-4xl font-bold text-blue-600 bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto">1</div>
-                        <h3 class="mt-5 text-xl font-semibold">Add Your Meds</h3>
-                        <p class="mt-2 text-gray-600">Quickly add your medications, dosages, and schedules.</p>
-                    </div>
-                    <!-- Step 2 -->
-                    <div class="fade-in" style="animation-delay: 0.2s;">
-                        <div class="text-4xl font-bold text-blue-600 bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto">2</div>
-                        <h3 class="mt-5 text-xl font-semibold">Set Reminders</h3>
-                        <p class="mt-2 text-gray-600">Customize smart alarms so you never miss a dose.</p>
-                    </div>
-                    <!-- Step 3 -->
-                    <div class="fade-in" style="animation-delay: 0.3s;">
-                        <div class="text-4xl font-bold text-blue-600 bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto">3</div>
-                        <h3 class="mt-5 text-xl font-semibold">Stay Healthy</h3>
-                        <p class="mt-2 text-gray-600">Track your progress and live a healthier, more organized life.</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Final CTA Section -->
-        <section id="pricing" class="py-20 md:py-32">
-            <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-900">
-                    Take Control of Your Health Today
-                </h2>
-                <p class="mt-6 text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
-                    Get started with our free plan and see how easy medication management can be.
-                </p>
-                <a href="#" class="mt-10 inline-block bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold text-lg shadow-xl hover:bg-blue-700 transition duration-150 transform hover:scale-105">
-                    Sign Up for Free
-                </a>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer class="bg-gray-800 text-gray-400 py-12">
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <p>&copy; 2025 MediTracker. All rights reserved.</p>
-            <p class="mt-2 text-sm">This is a fictional website for demonstration purposes.</p>
+      </div>
+    </nav>
+    <div id="menu" class="md:hidden bg-white shadow-xl fade-in absolute right-0 w-full">
+      <a href="#features" class="block px-4 py-3 text-gray-600 hover:bg-gray-50 hover:text-blue-600">Features</a>
+      <a href="#how-it-works" class="block px-4 py-3 text-gray-600 hover:bg-gray-50 hover:text-blue-600">How It Works</a>
+      <a href="#pricing" class="block px-4 py-3 text-gray-600 hover:bg-gray-50 hover:text-blue-600">Pricing</a>
+      <button class="block w-full px-4 py-4 text-center bg-blue-50 text-blue-700 font-semibold rounded-b-lg hover:bg-blue-100" aria-label="Sign Up" disabled>
+        Sign Up
+      </button>
+    </div>
+  </header>
+  <main>
+    <!-- Hero Section -->
+    <section id="hero" class="bg-white">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-20 md:py-32 text-center fade-in">
+        <h1 class="text-4xl md:text-6xl font-bold text-gray-900 leading-tight">
+          Never Miss a Dose Again.
+        </h1>
+        <p class="mt-6 text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
+          MediTracker is the simple, smart, and friendly way to manage your medications, schedule reminders, and track your health history.
+        </p>
+        <button class="mt-10 bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold text-lg shadow-xl hover:bg-blue-700 transition duration-150 transform hover:scale-105" aria-label="Start Tracking" disabled>
+          Start Tracking for Free
+        </button>
+      </div>
+    </section>
+    <!-- Features Section -->
+    <section id="features" class="py-20 md:py-28">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+          <h2 class="text-3xl md:text-4xl font-bold">Everything You Need in One App</h2>
+          <p class="mt-4 text-lg text-gray-600">Stay on top of your health with powerful features.</p>
         </div>
-    </footer>
-
-    <!-- JavaScript for Mobile Menu -->
-    <script>
-        const menuBtn = document.getElementById('menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-
-        menuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-            
-            // Toggle ARIA expanded state for accessibility
-            const isExpanded = menuBtn.getAttribute('aria-expanded') === 'true';
-            menuBtn.setAttribute('aria-expanded', !isExpanded);
-        });
-
-        // Close menu when a link is clicked
-        mobileMenu.addEventListener('click', (e) => {
-            if (e.target.tagName === 'A') {
-                mobileMenu.classList.add('hidden');
-                menuBtn.setAttribute('aria-expanded', 'false');
-            }
-        });
-    </script>
-    
+        <div class="grid md:grid-cols-3 gap-8">
+          <!-- Feature Card 1 -->
+          <div class="bg-white p-8 rounded-xl shadow-lg fade-in" style="animation-delay: 0.1s;">
+            <div class="bg-blue-100 text-blue-600 w-12 h-12 rounded-full flex items-center justify-center" aria-label="Reminders Icon">
+              <!-- Bell Icon SVG -->
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <title>Reminders</title>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14V11a6.002 6.002 0 00-4-5.659V4a2 2 0 10-4 0v1.341C7.67 7.165 6 9.388 6 12v2c0 .828-.672 1.5-1.5 1.5H3v2h12v-2z"/>
+              </svg>
+            </div>
+            <h3 class="mt-5 text-xl font-semibold">Smart Reminders</h3>
+            <p class="mt-2 text-gray-600">Get timely notifications for your pills, appointments, and refills. You'll never forget a dose.</p>
+          </div>
+          <!-- Feature Card 2 -->
+          <div class="bg-white p-8 rounded-xl shadow-lg fade-in" style="animation-delay: 0.2s;">
+            <div class="bg-green-100 text-green-600 w-12 h-12 rounded-full flex items-center justify-center" aria-label="History Icon">
+              <!-- History Icon SVG -->
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <title>Dosage History</title>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3M19.4 15A7 7 0 1112 5a7 7 0 017 7c0 1.49-.547 2.858-1.45 3.95"/>
+              </svg>
+            </div>
+            <h3 class="mt-5 text-xl font-semibold">Dosage History</h3>
+            <p class="mt-2 text-gray-600">Keep a detailed log of your medication history. Easily share reports with your doctor or caregiver.</p>
+          </div>
+          <!-- Feature Card 3 -->
+          <div class="bg-white p-8 rounded-xl shadow-lg fade-in" style="animation-delay: 0.3s;">
+            <div class="bg-indigo-100 text-indigo-600 w-12 h-12 rounded-full flex items-center justify-center" aria-label="Pharmacy Icon">
+              <!-- Pharmacy Icon SVG -->
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <title>Appointment Alerts</title>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3M16 7V3M4 11h16M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+              </svg>
+            </div>
+            <h3 class="mt-5 text-xl font-semibold">Appointment Alerts</h3>
+            <p class="mt-2 text-gray-600">Track your inventory and get notified when you're running low, well before you run out.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="py-20 md:py-28 bg-white">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+          <h2 class="text-3xl md:text-4xl font-bold">Get Started in 3 Easy Steps</h2>
+          <p class="mt-4 text-lg text-gray-600">Managing your health shouldn't be complicated.</p>
+        </div>
+        <div class="max-w-4xl mx-auto grid md:grid-cols-3 gap-8 md:gap-16 text-center">
+          <!-- Step 1 -->
+          <div class="fade-in" style="animation-delay: 0.1s;">
+            <div class="text-4xl font-bold text-blue-600 bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto">1</div>
+            <h3 class="mt-5 text-xl font-semibold">Add Your Meds</h3>
+            <p class="mt-2 text-gray-600">Quickly add your medications, dosages, and schedules.</p>
+          </div>
+          <!-- Step 2 -->
+          <div class="fade-in" style="animation-delay: 0.2s;">
+            <div class="text-4xl font-bold text-blue-600 bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto">2</div>
+            <h3 class="mt-5 text-xl font-semibold">Set Reminders</h3>
+            <p class="mt-2 text-gray-600">Customize smart alarms so you never miss a dose.</p>
+          </div>
+          <!-- Step 3 -->
+          <div class="fade-in" style="animation-delay: 0.3s;">
+            <div class="text-4xl font-bold text-blue-600 bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto">3</div>
+            <h3 class="mt-5 text-xl font-semibold">Stay Healthy</h3>
+            <p class="mt-2 text-gray-600">Track your progress and live a healthier, more organized life.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Final CTA Section -->
+    <section id="pricing" class="py-20 md:py-32">
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl md:text-4xl font-bold text-gray-900">
+          Take Control of Your Health Today
+        </h2>
+        <p class="mt-6 text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
+          Get started with our free plan and see how easy medication management can be.
+        </p>
+        <button class="mt-10 bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold text-lg shadow-xl hover:bg-blue-700 transition duration-150 transform hover:scale-105" aria-label="Sign Up for Free" disabled>
+          Sign Up for Free
+        </button>
+      </div>
+    </section>
+  </main>
+  <footer class="bg-gray-800 text-gray-400 py-12">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <p>&copy; 2025 MediTracker. All rights reserved.</p>
+      <p class="mt-2 text-sm">This is a fictional website for demonstration purposes.</p>
+    </div>
+  </footer>
 </body>
 </html>
-
